@@ -90,6 +90,7 @@
             :src="currentStep?.videoUrl[locale]"
             playsinline
             autoplay
+            :controls="showControls"
             class="w-full"
           ></video>
           <div class="text" v-html="currentStep?.text" />
@@ -119,8 +120,8 @@
           :src="videoModal.curVideoUrl"
           playsinline
           autoplay
-          controls
           class="w-full h-full"
+          :controls="showControls"
         ></video>
       </Modal>
     </main>
@@ -130,6 +131,7 @@
 
 <script setup lang="ts">
 const { t, locale } = useI18n();
+const route = useRoute();
 
 // Page meta
 useHead({
@@ -270,6 +272,13 @@ const videoModal = ref({
 
 const currentStep = ref();
 
+const showControls = ref(false);
+
+// Lifecycle
+onMounted(() => {
+  parseUrlAction();
+});
+
 // Methods
 const showStep = (index: number) => {
   currentStep.value = steps[index];
@@ -281,6 +290,7 @@ const hideStepModal = () => {
   setTimeout(() => {
     currentStep.value = undefined;
   }, 200);
+  showControls.value = false;
 };
 
 const showVideo = (videoUrl: string) => {
@@ -291,10 +301,42 @@ const showVideo = (videoUrl: string) => {
 const hideVideoModal = () => {
   videoModal.value.curVideoUrl = "";
   videoModal.value.isVisible = false;
+  showControls.value = false;
 };
 
 const stripAllTags = (text: string) => {
   return text.replace(/(<([^>]+)>)/gi, "");
+};
+
+const parseUrlAction = () => {
+  const show = route.query.show;
+  if (show) {
+    switch (show) {
+      case "1":
+        showVideo(reviews[2].videoUrl[locale.value]);
+        break;
+      case "2":
+        showVideo(reviews[1].videoUrl[locale.value]);
+        break;
+      case "3":
+        showVideo(reviews[0].videoUrl[locale.value]);
+        break;
+      case "4":
+        showStep(2);
+        break;
+      case "5":
+        showStep(4);
+        break;
+      case "6":
+        showStep(6);
+        break;
+      case "7":
+        showStep(7);
+        break;
+    }
+
+    showControls.value = true;
+  }
 };
 </script>
 
