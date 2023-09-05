@@ -7,13 +7,15 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27827328.bc9ddc0",
     "@nuxtjs/apollo": "^5.0.0-alpha.5",
     "@nuxtjs/i18n": "^8.0.0-beta.9",
     "nuxt": "3.0.0",
+    "standard-version": "^9.5.0",
     "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.7.14"
   },
