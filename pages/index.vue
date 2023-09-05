@@ -3,9 +3,15 @@
     <Header />
     <main>
       <div class="heading">
-        <video :src="coverVideoUrl[locale]" muted playsinline loop></video>
+        <video
+          :src="coverVideoUrl[locale]"
+          autoplay
+          muted
+          playsinline
+          loop
+        ></video>
       </div>
-      <section>
+      <section class="promoters-list-ct">
         <div class="promoters-list">
           <img v-for="promoter in promoters" :src="promoter.imgUrl" />
         </div>
@@ -25,7 +31,9 @@
                   backgroundImage: 'url(' + review.imgUrl + ')',
                 }"
               >
-                <Icon name="play" class="play-ico" />
+                <div class="play-ico-ct">
+                  <Icon name="play" class="play-ico" />
+                </div>
               </div>
               <h4>{{ review.by.name }}</h4>
               <h5>{{ review.by.role }}</h5>
@@ -34,10 +42,14 @@
         </div>
       </section>
       <div class="steps">
-        <div class="steps-ct">
-          <div class="center">
-            <div v-for="(step, index) in steps" class="step">
-              <div class="heading">
+        <div class="center">
+          <div class="steps-ct">
+            <div
+              v-for="(step, index) in steps"
+              class="step"
+              @click="showStep(index)"
+            >
+              <div class="head">
                 <div class="number">{{ step.number }}</div>
                 <h2 class="title">{{ step.title }}</h2>
               </div>
@@ -48,59 +60,67 @@
                 }"
               />
               <p class="preview-text">
-                {{ stripAllTags(step.text).substr(0, 120) }}...
+                {{ stripAllTags(step.text).substr(0, 150) }}...
               </p>
-              <Button :value="$t('common.readAll')" @click="showStep(index)" />
+              <div class="button-ct">
+                <div class="button clickable">
+                  {{ $t("common.readAll") }}
+                  <div class="plus">+</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!--<section class="alternate">
-        <div class="gallery">
-          <div v-for="imageUrl in getGalleryImagesList()" class="image">
-            <div
-              class="img"
-              :style="{
-                backgroundImage: 'url(' + imageUrl + ')',
-              }"
-            />
-          </div>
-        </div>
-      </section>-->
-      <Modal
-        :is-visible="stepModal.isVisible"
-        :width="700"
-        :height="400"
-        @close="hideStepModal"
-      >
-        <video
-          v-if="currentStep?.videoUrl"
-          :src="currentStep?.videoUrl"
-          playsinline
-          autoplay
-        ></video>
-        <div class="text" v-html="currentStep?.text" />
-        <h2 class="highlight-title">
-          {{ currentStep?.highlightItemTitle }}
-        </h2>
-        <p class="highlight">
-          {{ currentStep?.highlightItem }}
-        </p>
+      <div class="download-brochure-ct">
         <a :href="'/pdf/brochure-' + locale + '.pdf'" target="_blank">
           <Button :value="$t('common.downloadBrochure')" />
         </a>
+      </div>
+      <Modal
+        :is-visible="stepModal.isVisible"
+        :width="700"
+        :height="500"
+        @close="hideStepModal"
+      >
+        <div class="full-screen-preview">
+          <h2>{{ currentStep?.title }}</h2>
+          <video
+            v-if="currentStep?.videoUrl"
+            :src="currentStep?.videoUrl[locale]"
+            playsinline
+            autoplay
+            class="w-full"
+          ></video>
+          <div class="text" v-html="currentStep?.text" />
+          <div v-if="currentStep?.highlightItem" class="highlight">
+            <h2 class="title">
+              {{ currentStep?.highlightItemTitle }}
+            </h2>
+            <div class="text" v-html="currentStep?.highlightItem" />
+          </div>
+          <a :href="'/pdf/brochure-' + locale + '.pdf'" target="_blank">
+            <Button
+              :value="$t('common.downloadCompleteBrochure')"
+              class="button"
+            />
+          </a>
+        </div>
       </Modal>
       <Modal
         :is-visible="videoModal.isVisible"
         :width="700"
-        :height="400"
+        :height="394"
+        full-screen
         @close="hideVideoModal"
       >
         <video
-          v-if="curVideoUrl"
+          v-if="videoModal.curVideoUrl"
           :src="videoModal.curVideoUrl"
           playsinline
           autoplay
+          controls
+          class="w-full h-full"
         ></video>
       </Modal>
     </main>
@@ -131,10 +151,10 @@ const promoters = [
     imgUrl: "/img/comune-bronzolo.jpg",
   },
   {
-    imgUrl: "/img/erdbau.jpg",
+    imgUrl: "/img/erdbau.png",
   },
   {
-    imgUrl: "/img/provincia-bolzano.jpg",
+    imgUrl: "/img/provincia-bolzano.png",
   },
 ];
 
@@ -228,15 +248,14 @@ const steps = [
     title: t("pg.home.urbanQualification.title"),
     imgUrl: "/img/step-5.jpg",
     text: t("pg.home.urbanQualification.text"),
-    highlightItemTitle: t("pg.home.smokeMonitoring.highlightTitle"),
-    highlightItem: t("pg.home.smokeMonitoring.highlightText"),
+    highlightItemTitle: t("pg.home.urbanQualification.highlightTitle"),
+    highlightItem: t("pg.home.urbanQualification.highlightText"),
   },
   {
     number: "6",
     title: t("pg.home.smokeMonitoring.title"),
     imgUrl: "/img/step-6.jpg",
     text: t("pg.home.smokeMonitoring.text"),
-    highlightItem: t("pg.home.smokeMonitoring.highlightText"),
   },
 ];
 
@@ -259,6 +278,9 @@ const showStep = (index: number) => {
 
 const hideStepModal = () => {
   stepModal.value.isVisible = false;
+  setTimeout(() => {
+    currentStep.value = undefined;
+  }, 200);
 };
 
 const showVideo = (videoUrl: string) => {
@@ -267,6 +289,7 @@ const showVideo = (videoUrl: string) => {
 };
 
 const hideVideoModal = () => {
+  videoModal.value.curVideoUrl = "";
   videoModal.value.isVisible = false;
 };
 
@@ -288,7 +311,7 @@ section {
   @apply py-20;
 
   & h2 {
-    @apply text-primary text-5xl uppercase font-black;
+    @apply text-primary text-3xl uppercase font-black;
   }
 
   & h3 {
@@ -296,32 +319,42 @@ section {
   }
 }
 
-.promoters-list {
-  @apply flex gap-4 items-center;
+.promoters-list-ct {
+  @apply py-5;
 
-  & img {
-    @apply h-24;
+  .promoters-list {
+    @apply flex gap-12 justify-center;
+
+    & img {
+      @apply h-12;
+    }
   }
 }
 
 .reviews {
-  @apply text-center;
+  @apply text-center bg-input;
 
   .reviews-list {
-    @apply flex items-center gap-5;
+    @apply flex justify-center gap-5 mt-8;
 
     & .review {
-      & .preview-circle {
-        @apply flex items-center justify-center w-48 h-48 bg-cover bg-center bg-placeholder;
+      @apply flex flex-1 flex-col items-center;
 
-        & .play-ico {
-          @apply w-10 h-10;
+      & .preview-circle {
+        @apply flex items-center justify-center w-48 h-48 bg-cover bg-center bg-placeholder rounded-full;
+
+        & .play-ico-ct {
+          @apply flex items-center justify-center w-16 h-16 rounded-full border-white border-2;
+
+          & .play-ico {
+            @apply fill-current text-white w-10 h-10;
+          }
         }
       }
     }
 
     & h4 {
-      @apply uppercase font-bold font-primary;
+      @apply uppercase font-bold text-primary mt-3;
     }
 
     & h5 {
@@ -331,43 +364,141 @@ section {
 }
 
 .steps {
-  .steps-ct {
-    @apply grid grid-cols-3 gap-4;
+  @apply mt-12 mb-6;
+
+  & .steps-ct {
+    @apply grid grid-cols-2 gap-8;
     & .step {
-      @apply border-2 border-primary p-4;
-      & .heading {
-        @apply flex gap-3;
+      @apply bg-primary p-6;
+      & .head {
+        @apply flex items-center gap-3;
 
         & .number {
-          @apply flex items-center justify-center text-xl font-bold text-primary border-2 border-primary rounded-full w-24 h-24;
+          @apply flex shrink-0 items-center justify-center text-2xl font-black text-white border-2 border-white rounded-full w-16 h-16;
         }
 
         & .title {
-          @apply font-bold uppercase text-lg flex-grow;
+          @apply font-black uppercase text-lg flex-grow leading-tight text-white;
         }
       }
 
       & .preview-image {
-        @apply h-32 bg-cover bg-center bg-placeholder;
+        @apply h-56 bg-cover bg-center bg-placeholder my-5;
       }
 
       & .preview-text {
-        @apply mb-4;
+        @apply mb-8 text-white;
+      }
+
+      & .button-ct {
+        @apply flex justify-center mb-2;
+
+        & .button {
+          @apply flex gap-2 text-sm py-3 px-4 bg-white bg-opacity-10 transition text-white rounded-3xl font-bold uppercase;
+
+          & .plus {
+            @apply flex items-center justify-center w-5 h-5 border-2 border-white rounded-full font-bold text-base;
+          }
+
+          &:hover {
+            @apply bg-opacity-20;
+          }
+        }
       }
     }
   }
 }
 
+.download-brochure-ct {
+  @apply flex justify-center mb-12;
+}
+
+.full-screen-preview {
+  & h2 {
+    @apply text-3xl font-black mt-2 mb-4 uppercase text-primary;
+  }
+
+  & video {
+    @apply mb-4 rounded-md bg-placeholder;
+  }
+
+  & .text {
+    @apply text-base;
+  }
+
+  & .highlight {
+    @apply bg-input p-5;
+
+    & .title {
+      @apply uppercase font-bold text-primary;
+    }
+
+    & .text {
+      @apply mt-3;
+    }
+  }
+
+  & .button {
+    @apply mt-6;
+  }
+}
+
 @media only screen and (max-width: 980px) {
+  .heading {
+    @apply h-[70vw];
+
+    & video {
+      @apply bg-placeholder h-full w-full object-fill;
+    }
+  }
+
   section {
     @apply py-12;
 
     & h2 {
-      @apply text-4xl;
+      @apply text-2xl;
     }
 
     & h3 {
       @apply text-base mt-1;
+    }
+  }
+
+  .promoters-list-ct {
+    & .promoters-list {
+      @apply block text-center;
+
+      & img {
+        @apply inline-block h-6 mx-3;
+      }
+    }
+  }
+
+  .reviews {
+    & .reviews-list {
+      @apply flex-col;
+
+      & .review {
+        & h5 {
+          @apply px-6;
+        }
+      }
+    }
+  }
+
+  .steps {
+    & .steps-ct {
+      @apply grid-cols-1 gap-4;
+    }
+  }
+}
+</style>
+
+<style lang="postcss">
+.full-screen-preview {
+  & .text {
+    & p {
+      @apply mb-3 leading-relaxed;
     }
   }
 }

@@ -171,13 +171,13 @@
 <script setup lang="ts">
 const { locale } = useI18n();
 
-const websiteName = "gruppolega.com";
-const legalName = "Lega Salvini Alto Adige Südtirol Lega";
+const websiteName = "tunnelbronzolo.com";
+const legalName = "FlashBeing Srl";
 </script>
 
 <style lang="postcss" scoped>
 .terms-ct {
-  @apply pt-6 pb-12;
+  @apply pt-44 pb-12;
 
   & h1 {
     @apply text-4xl py-4 font-black;
@@ -185,6 +185,12 @@ const legalName = "Lega Salvini Alto Adige Südtirol Lega";
 
   & h2 {
     @apply text-xl mt-6 font-black;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .terms-ct {
+    @apply pt-36;
   }
 }
 </style>

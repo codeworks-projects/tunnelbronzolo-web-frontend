@@ -5,18 +5,20 @@
       visible: isVisible,
     }"
   >
-    <div class="bg" />
+    <div class="bg" @click="close" />
     <div
       :class="{
         box: true,
         'show-from-bottom': true,
         'auto-height': autoHeight,
         'has-footer': hasFooter,
+        'no-title': !title,
+        'full-screen': fullScreen,
       }"
       :style="boxStyle"
     >
       <div class="header">
-        <h2 class="title">
+        <h2 v-if="title" class="title">
           <nuxt-link v-if="titleTo" :to="titleTo" class="clickable text">{{
             title
           }}</nuxt-link>
@@ -79,6 +81,10 @@ export default defineNuxtComponent({
       type: String,
       default: "px",
     },
+    fullScreen: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props) {
@@ -121,7 +127,7 @@ export default defineNuxtComponent({
   }
 
   & .box {
-    @apply bg-white rounded-xl overflow-hidden;
+    @apply bg-white rounded-xl;
 
     width: 500px;
     height: 500px;
@@ -185,6 +191,34 @@ export default defineNuxtComponent({
     & .footer {
       @apply flex items-center justify-center absolute bottom-4 left-4;
     }
+
+    &.no-title {
+      & .header {
+        @apply absolute -top-3 -right-20 z-10;
+      }
+
+      & .content-ct {
+        @apply h-full pr-0;
+
+        & .content {
+          @apply py-6;
+        }
+      }
+    }
+
+    &.full-screen {
+      & .header {
+        @apply absolute top-0 right-0 z-10;
+      }
+
+      & .content-ct {
+        @apply h-full pr-0;
+
+        & .content {
+          @apply p-0;
+        }
+      }
+    }
   }
 
   &.visible {
@@ -207,6 +241,18 @@ export default defineNuxtComponent({
 
       width: auto !important;
       height: auto !important;
+
+      &.no-title {
+        & .header {
+          @apply absolute -top-2 -right-2 z-10;
+        }
+
+        & .content-ct {
+          & .content {
+            @apply pt-14;
+          }
+        }
+      }
     }
   }
 }

@@ -82,11 +82,11 @@ export default defineNuxtComponent({
 
 <style lang="postcss" scoped>
 .button {
-  @apply relative inline-block rounded-md px-10 text-base font-semibold select-none text-lg;
+  @apply relative inline-block px-6 text-sm uppercase font-semibold select-none;
 
-  min-width: 50px;
-  height: 50px;
-  line-height: 52px;
+  min-width: 45px;
+  height: 45px;
+  line-height: 47px;
 
   & .svg-ct {
     @apply inline-block h-full mr-2 align-top;

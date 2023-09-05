@@ -62,10 +62,8 @@ const localeRoute = useLocaleRoute();
 
 <style lang="postcss" scoped>
 footer {
-  @apply text-white;
-
   & .summary {
-    @apply bg-primary py-10;
+    @apply bg-input py-10;
 
     & .center {
       @apply flex items-center;
@@ -101,7 +99,7 @@ footer {
   }
 
   & .copy {
-    @apply bg-primary py-4 text-xs;
+    @apply bg-input py-4 text-xs;
 
     & a:hover {
       @apply underline;

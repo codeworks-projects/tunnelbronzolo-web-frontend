@@ -3,7 +3,14 @@
     <header>
       <div class="center">
         <nuxt-link :to="localeRoute('/')" class="logo-ct">
-          <Image src="/img/logo.png" class="logo" />
+          <Image
+            :src="
+              route.fullPath === localeRoute('/')?.fullPath
+                ? '/img/logo-white.png'
+                : '/img/logo.png'
+            "
+            class="logo"
+          />
         </nuxt-link>
         <div class="lang-ct">
           <div
@@ -17,13 +24,13 @@
         </div>
       </div>
     </header>
-    <div class="spacer" />
   </div>
 </template>
 
 <script setup lang="ts">
 const { locale, setLocale } = useI18n();
 const localeRoute = useLocaleRoute();
+const route = useRoute();
 
 const AVAILABLE_LANGS = ["it", "de"];
 
@@ -34,25 +41,22 @@ const setLanguage = (lang: string) => {
 </script>
 
 <style lang="postcss" scoped>
-header,
-.spacer {
-  @apply h-24;
-}
-
 header {
-  @apply absolute top-0 left-0 right-0 bg-white shadow-md z-10;
+  @apply absolute top-0 left-0 right-0 z-10;
 
   & .center {
-    @apply flex gap-4 items-center h-full;
+    @apply flex gap-4 items-start h-full;
 
     & .logo-ct {
+      @apply mt-5;
+
       & .logo {
-        @apply h-16;
+        @apply h-32;
       }
     }
 
     & .lang-ct {
-      @apply flex gap-2;
+      @apply flex gap-2 flex-grow justify-end mt-8;
 
       & .lang {
         @apply flex h-10 w-10 items-center justify-center rounded-md cursor-pointer uppercase bg-white bg-opacity-50;
@@ -76,7 +80,7 @@ header {
     & .center {
       & .logo-ct {
         & .logo {
-          @apply h-12;
+          @apply h-24;
         }
       }
 
