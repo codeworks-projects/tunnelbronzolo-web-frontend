@@ -93,6 +93,11 @@
             :controls="showControls"
             class="w-full"
           ></video>
+          <p v-if="currentStep?.videoLabel" class="video-label">
+            {{ currentStep?.videoLabel.name }}<br /><span class="role">{{
+              currentStep?.videoLabel.role
+            }}</span>
+          </p>
           <div class="text" v-html="currentStep?.text" />
           <div v-if="currentStep?.highlightItem" class="highlight">
             <h2 class="title">
@@ -206,6 +211,10 @@ const steps = [
       it: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/erdbau-it.mp4",
       de: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/erdbau-it.mp4",
     },
+    videoLabel: {
+      name: "Ermanno Ramazzotti",
+      role: t("pg.home.mobilityUnite.videoLabel.role"),
+    },
   },
   {
     number: "2",
@@ -222,6 +231,10 @@ const steps = [
       it: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/estero-de.mp4",
       de: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/estero-de.mp4",
     },
+    videoLabel: {
+      name: "Bernhard W. Hopf",
+      role: t("pg.home.jetGrouting.videoLabel.role"),
+    },
   },
   {
     number: "2.2",
@@ -237,6 +250,10 @@ const steps = [
     videoUrl: {
       it: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/inclinazione-de.mp4",
       de: "https://codeworks-projects-tunnelbronzolo.s3.eu-west-1.amazonaws.com/video/inclinazione-de.mp4",
+    },
+    videoLabel: {
+      name: "Lukas Mair",
+      role: t("pg.home.securityHole.videoLabel.role"),
     },
   },
   {
@@ -464,6 +481,14 @@ section {
     @apply mb-4 rounded-md bg-placeholder;
   }
 
+  & .video-label {
+    @apply -mt-2 text-base font-bold leading-none mb-8;
+
+    & .role {
+      @apply text-grey text-xs font-normal leading-tight;
+    }
+  }
+
   & .text {
     @apply text-base;
   }
@@ -540,7 +565,7 @@ section {
 .full-screen-preview {
   & .text {
     & p {
-      @apply mb-3 leading-relaxed;
+      @apply mb-2 leading-relaxed;
     }
   }
 }
