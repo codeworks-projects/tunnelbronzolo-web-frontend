@@ -420,7 +420,7 @@ section {
         }
 
         & .title {
-          @apply font-black uppercase text-lg flex-grow leading-tight text-white;
+          @apply font-black uppercase text-lg flex-grow leading-tight text-white break-words;
         }
       }
 
@@ -457,7 +457,7 @@ section {
 
 .full-screen-preview {
   & h2 {
-    @apply text-3xl font-black mt-2 mb-4 uppercase text-primary;
+    @apply text-3xl font-black mt-2 mb-4 uppercase text-primary break-words;
   }
 
   & video {

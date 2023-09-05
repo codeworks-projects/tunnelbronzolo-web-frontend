@@ -3,7 +3,7 @@
     <div class="summary">
       <div class="center">
         <div class="logo-ct">
-          <Image src="/img/logo.png" class="logo" />
+          <Image :src="'/img/logo-' + locale + '.png'" class="logo" />
         </div>
         <div class="contacts">
           <p>
@@ -57,6 +57,7 @@
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n();
 const localeRoute = useLocaleRoute();
 </script>
 

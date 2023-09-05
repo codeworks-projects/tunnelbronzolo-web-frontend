@@ -5,9 +5,9 @@
         <nuxt-link :to="localeRoute('/')" class="logo-ct">
           <Image
             :src="
-              route.fullPath === localeRoute('/')?.fullPath
-                ? '/img/logo-white.png'
-                : '/img/logo.png'
+              route.path === localeRoute('/')?.fullPath
+                ? '/img/logo-white-' + locale + '.png'
+                : '/img/logo-' + locale + '.png'
             "
             class="logo"
           />
