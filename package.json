@@ -8,7 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "release": "standard-version"
+    "release": "standard-version",
+    "test:ci": "echo no test",
+    "release-production": "bash ./script/release-production.sh"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27827328.bc9ddc0",
