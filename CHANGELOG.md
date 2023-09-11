@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/codeworks-projects/tunnelbronzolo-web-frontend/compare/v1.1.0...v1.2.0) (2023-09-11)
+
+
+### Features
+
+* updated section 6 title ([bedc817](https://github.com/codeworks-projects/tunnelbronzolo-web-frontend/commit/bedc817f1a55d39e1181c451c090c2667f63fdf3))
+
+
+### Bug Fixes
+
+* fixed de texts ([1a32a9e](https://github.com/codeworks-projects/tunnelbronzolo-web-frontend/commit/1a32a9ec02a2f2a85658bbdc93a8ea3190a07d47))
+* fixed Strabag company names ([59925a0](https://github.com/codeworks-projects/tunnelbronzolo-web-frontend/commit/59925a008d92fb3c66eda343f266d27022dd7d37))
+
 ## 1.1.0 (2023-09-05)
 
 
