@@ -98,8 +98,8 @@ jobs:
           cd naru
           git config user.email "ci@codeworks.build"
           git config user.name "Codeworks CI"
-          python ops/change-commit.py -b ${{ github.ref_name }} -s gruppolega -r gruppolega-web-frontend -c ${{ github.sha }}
-          git add services/gruppolega.nix
+          python ops/change-commit.py -b ${{ github.ref_name }} -s tunnelbronzolo -r tunnelbronzolo-web-frontend -c ${{ github.sha }}
+          git add services/tunnelbronzolo.nix
           git commit -m '${{ github.ref_name }} - ${{github.repository}}'
           git push origin main
       
@@ -109,8 +109,8 @@ jobs:
           cd yosai
           git config user.email "ci@codeworks.build"
           git config user.name "Codeworks CI"
-          python ops/change-commit.py -b ${{ github.ref_name }} -s gruppolega -r gruppolega-web-frontend -c ${{ github.sha }}
-          git add services/gruppolega.nix
+          python ops/change-commit.py -b ${{ github.ref_name }} -s tunnelbronzolo -r tunnelbronzolo-web-frontend -c ${{ github.sha }}
+          git add services/tunnelbronzolo.nix
           git commit -m '${{ github.ref_name }} - ${{github.repository}}'
           git push origin main
   
